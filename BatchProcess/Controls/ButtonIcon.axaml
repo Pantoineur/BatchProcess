@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BatchProcess.Controls">
+    <Design.PreviewWith>
+        <StackPanel>
+            <controls:ButtonIcon Icon="&#xe2c2;" IconOnly="True"/>
+            <controls:ButtonIcon Text="Toto" Icon="&#xe2c2;"/>
+        </StackPanel>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ButtonIcon">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                    <StackPanel Orientation="{TemplateBinding Orientation}">
+                        <Label Classes="Icon" Classes.IconOnly="{TemplateBinding IconOnly}" Content="{TemplateBinding Icon}"></Label>
+                        <Label Content="{TemplateBinding Text}" IsVisible="{TemplateBinding IconOnly, Converter={x:Static BoolConverters.Not}}"/>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

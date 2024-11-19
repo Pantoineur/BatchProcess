@@ -1,0 +1,97 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:BatchProcess.ViewModels"
+        xmlns:controls="clr-namespace:BatchProcess.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BatchProcess.MainView"
+        x:DataType="vm:MainViewModel"
+        Title="BatchProcess">
+    
+    <Design.DataContext><vm:MainViewModel></vm:MainViewModel></Design.DataContext>
+    
+    <Grid ColumnDefinitions="Auto, *">
+        <Border Grid.Column="0" Background="{DynamicResource PrimaryBackground}" Width="{Binding Width}" 
+                PointerExited="SideMenu_PointerEvent"
+                PointerEntered="SideMenu_PointerEvent">
+            <Grid RowDefinitions="*, Auto" Margin="10">
+                <StackPanel Grid.Row="0">
+                    <Label Grid.Row="0" HorizontalAlignment="Center"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Margin="0,0,0,5"
+                       FontSize="20"
+                       Content="{Binding Title}"/>
+                    
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10" Command="{Binding ToggleMenuCollapse}"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal"
+                                    Classes.Transparent="{Binding MenuIsCollapsed}"
+                                    Classes.Icon="{Binding MenuIsCollapsed}">
+                            <Label Classes="Icon" Content="&#xe2c2;"></Label>
+                            <Label Content="Home" 
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" 
+                            Margin="0 0 0 10"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Classes="Icon" Content="&#xe2c2;"></Label>
+                            <Label Content="Process"
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Classes="Icon" Content="&#xE7F2;"></Label>
+                            <Label Content="Actions" 
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                            <Label Classes="Icon" Content="&#xe2c2;"></Label>
+                            <Label Content="Macros" 
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Classes="Icon" Content="&#xe2c2;"></Label>
+                            <Label Content="Reporter" 
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10"
+                            Classes.Transparent="{Binding MenuIsCollapsed}"
+                            Classes.Icon="{Binding MenuIsCollapsed}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Classes="Icon" Content="&#xE03A;"></Label>
+                            <Label Content="History" 
+                                   IsVisible="{Binding !MenuIsCollapsed}" />
+                        </StackPanel>
+                    </Button>
+                    
+                </StackPanel>
+                
+                <Button Grid.Row="1" Classes="Transparent">
+                    <Label FontSize="20" Classes="Icon" Content="&#xE270;"></Label>
+                </Button>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}"></Border>
+    </Grid>
+    
+</Window>

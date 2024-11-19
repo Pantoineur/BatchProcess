@@ -1,0 +1,73 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource PrimaryBackground}">
+            <StackPanel>
+                <Button HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Classes="Icon">&#xe2c2;</Label>
+                        <Label>HOME</Label>
+                    </StackPanel>
+                </Button>
+                <Button Classes="Transparent">
+                    <Label Classes="Icon" Content="&#xe270;"></Label>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+    
+    <!-- Add Styles Here -->
+    
+    <Style Selector="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource AkkoPro}"/>
+    </Style>
+    
+    <Style Selector="Border">
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Width" Duration="0:0:0.2"></DoubleTransition>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <!-- Button -->
+    <Style Selector="Button">
+        <Setter Property="CornerRadius" Value="4"></Setter>
+        <Setter Property="Padding" Value="10 9 10 5"></Setter>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{DynamicResource ElementBackground}"/>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverText}"/>
+            <Setter Property="Background" Value="{DynamicResource PrimaryHover}"/>
+        </Style>
+        
+        <Style Selector="^.Transparent">
+            <Setter Property="Background" Value="Transparent"/>
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="RenderTransform" Value="scale(1.2)"/>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+        </Style>
+    
+        <Style Selector="^:not(.Transparent) /template/ ContentPresenter">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1"></TransformOperationsTransition>
+                    <BrushTransition Property="Background" Duration="0:0:.2"></BrushTransition>
+                </Transitions>
+            </Setter>
+        </Style>
+    </Style>
+    
+    
+    <!-- Label.Icon -->
+    <Style Selector="Label.Icon">
+        <Setter Property="FontFamily" Value="{DynamicResource PhosphorFill}"/>
+        <Style Selector="^:not(.IconOnly)">
+            <Setter Property="Margin" Value="0 -1.5 0 0"/>
+        </Style>
+    </Style>
+    
+</Styles>
