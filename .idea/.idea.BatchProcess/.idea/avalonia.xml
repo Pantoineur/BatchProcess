@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="BatchProcess/App.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Controls/ButtonIcon.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/MainWindow.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Styles/AppDefaultStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/HomePageView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/HomeView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/MainView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/ProcessPageView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/ProcessView.axaml" value="BatchProcess/BatchProcess.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -59,6 +59,10 @@
                 </Transitions>
             </Setter>
         </Style>
+        
+        <Style Selector="^.Active">
+            <Setter Property="Background" Value="{DynamicResource SelectedPageBackground}"/>
+        </Style>
     </Style>
     
     

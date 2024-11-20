@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BatchProcess.ViewModels"
         xmlns:controls="clr-namespace:BatchProcess.Controls"
+        xmlns:view="clr-namespace:BatchProcess.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="BatchProcess.MainView"
         x:DataType="vm:MainViewModel"
@@ -12,21 +13,37 @@
     <Design.DataContext><vm:MainViewModel></vm:MainViewModel></Design.DataContext>
     
     <Grid ColumnDefinitions="Auto, *">
+        
+        <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}"></Border>
+        <ContentControl Grid.Column="1"
+                        Margin="10"
+                        Content="{Binding CurrentPage}"
+                        />
+        
         <Border Grid.Column="0" Background="{DynamicResource PrimaryBackground}" Width="{Binding Width}" 
                 PointerExited="SideMenu_PointerEvent"
                 PointerEntered="SideMenu_PointerEvent">
             <Grid RowDefinitions="*, Auto" Margin="10">
                 <StackPanel Grid.Row="0">
-                    <Label Grid.Row="0" HorizontalAlignment="Center"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       Margin="0,0,0,5"
-                       FontSize="20"
-                       Content="{Binding Title}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Grid.Row="0" HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,5"
+                               FontSize="20"
+                               Content="{Binding Title}"/>
+                        <Button Classes="Transparent" Command="{Binding PinSideMenu}">
+                            <Label Classes="Icon" Content="{Binding PinIcon}"
+                                   Margin="10 -10 0 0"
+                                   IsVisible="{Binding !MenuIsCollapsed}"></Label>
+                        </Button>
+                    </StackPanel>
                     
-                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10" Command="{Binding ToggleMenuCollapse}"
+                    <Button HorizontalAlignment="Stretch" Margin="0 0 0 10" 
+                            Command="{Binding OpenHomePageCommand}"
                             Classes.Transparent="{Binding MenuIsCollapsed}"
-                            Classes.Icon="{Binding MenuIsCollapsed}">
+                            Classes.Icon="{Binding MenuIsCollapsed}"
+                            Classes.Active="{Binding HomePageActive}">
                         <StackPanel Orientation="Horizontal"
                                     Classes.Transparent="{Binding MenuIsCollapsed}"
                                     Classes.Icon="{Binding MenuIsCollapsed}">
@@ -38,7 +55,9 @@
                     <Button HorizontalAlignment="Stretch" 
                             Margin="0 0 0 10"
                             Classes.Transparent="{Binding MenuIsCollapsed}"
-                            Classes.Icon="{Binding MenuIsCollapsed}">
+                            Classes.Icon="{Binding MenuIsCollapsed}"
+                            Classes.Active="{Binding ProcessPageActive}"
+                            Command="{Binding OpenProcessPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="Icon" Content="&#xe2c2;"></Label>
                             <Label Content="Process"
@@ -91,7 +110,6 @@
                 </Button>
             </Grid>
         </Border>
-        <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}"></Border>
     </Grid>
     
 </Window>

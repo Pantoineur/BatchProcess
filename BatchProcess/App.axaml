@@ -1,9 +1,14 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="BatchProcess.App"
+             xmlns:local="clr-namespace:BatchProcess"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+             <Application.DataTemplates>
+                 <local:ViewLocator></local:ViewLocator>
+             </Application.DataTemplates>
+             
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="Styles/AppDefaultStyles.axaml"></StyleInclude>
@@ -13,11 +18,19 @@
              <Application.Resources>
                  <FontFamily x:Key="AkkoPro">/Assets/Fonts/AkkoPro-Regular.ttf#Akko Pro</FontFamily>
                  <FontFamily x:Key="PhosphorFill">/Assets/Fonts/Phosphor-Fill.ttf#Phosphor-Fill</FontFamily>
+                 <FontFamily x:Key="Phosphor">/Assets/Fonts/Phosphor.ttf#Phosphor</FontFamily>
                  
                  <SolidColorBrush x:Key="PrimaryText">White</SolidColorBrush>
+                 
                  <SolidColorBrush x:Key="PrimaryBackground">#141726</SolidColorBrush>
                  <SolidColorBrush x:Key="SecondaryBackground">#282D4C</SolidColorBrush>
                  <SolidColorBrush x:Key="ElementBackground">#191d30</SolidColorBrush>
+                 
+                 <LinearGradientBrush x:Key="SelectedPageBackground" StartPoint="0%, 0%" EndPoint="100%, 0%">
+                     <GradientStop Offset="0" Color="#191d30"></GradientStop>
+                     <GradientStop Offset="1" Color="#484D8F"></GradientStop>
+                 </LinearGradientBrush>
+                 
                  <SolidColorBrush x:Key="PrimaryHover">#282e4c</SolidColorBrush>
                  <SolidColorBrush x:Key="PrimaryHoverText">#DDDDDD</SolidColorBrush>
              </Application.Resources>
