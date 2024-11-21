@@ -12,6 +12,7 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="Styles/AppDefaultStyles.axaml"></StyleInclude>
+        <StyleInclude Source="Styles/ProcessPageStyles.axaml"></StyleInclude>
         <StyleInclude Source="Controls/ButtonIcon.axaml"></StyleInclude>
     </Application.Styles>
              

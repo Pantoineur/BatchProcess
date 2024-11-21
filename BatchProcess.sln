@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchProcess", "BatchProcess\BatchProcess.csproj", "{81B51871-80DF-45B7-8BAD-28D9A884D456}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerWarZ.MapCreator.Core", "TowerWarZ.MapCreator.Core\TowerWarZ.MapCreator.Core.csproj", "{9CA8E422-7FE0-42AA-B977-CF9234E071A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{81B51871-80DF-45B7-8BAD-28D9A884D456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B51871-80DF-45B7-8BAD-28D9A884D456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B51871-80DF-45B7-8BAD-28D9A884D456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CA8E422-7FE0-42AA-B977-CF9234E071A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CA8E422-7FE0-42AA-B977-CF9234E071A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CA8E422-7FE0-42AA-B977-CF9234E071A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CA8E422-7FE0-42AA-B977-CF9234E071A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

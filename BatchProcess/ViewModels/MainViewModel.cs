@@ -15,11 +15,11 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
     [NotifyPropertyChangedFor(nameof(Width))]
-    private bool _menuIsCollapsed = true;
+    private bool _menuIsCollapsed;
     
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PinIcon))]
-    private bool _isPinned;
+    private bool _isPinned = true;
     
     #endregion
 

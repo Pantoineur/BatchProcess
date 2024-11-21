@@ -2,7 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BatchProcess.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BatchProcess.Views.ProcessPageView">
-    Process view
+             x:Class="BatchProcess.Views.ProcessPageView"
+             x:DataType="vm:ProcessPageViewModel">
+    <Grid ColumnDefinitions="*, Auto">
+        <Border Grid.Column="0">
+            <Border Background="DarkBlue" Margin="3">
+                
+            </Border>
+        </Border>
+        <Border Grid.Column="1" CornerRadius="10" Background="{DynamicResource PrimaryBackground}" Width="150" Margin="20">
+            <StackPanel Margin="20" Width="100">
+                <Button Opacity="1" HorizontalAlignment="Center" Classes="MapElement" Background="{DynamicResource SecondaryBackground}" Width="60" Height="60">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="LightBlue"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

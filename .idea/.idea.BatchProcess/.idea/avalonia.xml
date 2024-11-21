@@ -7,6 +7,7 @@
         <entry key="BatchProcess/Controls/ButtonIcon.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/MainWindow.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Styles/AppDefaultStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Styles/ProcessPageStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/HomePageView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/HomeView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/MainView.axaml" value="BatchProcess/BatchProcess.csproj" />

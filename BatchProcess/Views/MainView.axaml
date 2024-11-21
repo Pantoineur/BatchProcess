@@ -8,7 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="BatchProcess.MainView"
         x:DataType="vm:MainViewModel"
-        Title="BatchProcess">
+        Title="TWMapCreator">
     
     <Design.DataContext><vm:MainViewModel></vm:MainViewModel></Design.DataContext>
     
