@@ -56,11 +56,11 @@
                             Margin="0 0 0 10"
                             Classes.Transparent="{Binding MenuIsCollapsed}"
                             Classes.Icon="{Binding MenuIsCollapsed}"
-                            Classes.Active="{Binding ProcessPageActive}"
-                            Command="{Binding OpenProcessPageCommand}">
+                            Classes.Active="{Binding MapCreatorPageActive}"
+                            Command="{Binding OpenMapCreatorPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="Icon" Content="&#xe2c2;"></Label>
-                            <Label Content="Process"
+                            <Label Content="Map Creator"
                                    IsVisible="{Binding !MenuIsCollapsed}" />
                         </StackPanel>
                     </Button>

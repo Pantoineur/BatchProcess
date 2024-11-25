@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace BatchProcess.Views;
 
-public partial class ProcessPageView : UserControl
+public partial class MapCreatorPageView : UserControl
 {
-    public ProcessPageView()
+    public MapCreatorPageView()
     {
         InitializeComponent();
     }

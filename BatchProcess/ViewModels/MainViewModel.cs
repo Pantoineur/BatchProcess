@@ -1,16 +1,21 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using BatchProcess.Data;
+using BatchProcess.Factories;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BatchProcess.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    private readonly PageFactory _pageFactory;
+
     #region Observable Properties
     
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HomePageActive))]
-    [NotifyPropertyChangedFor(nameof(ProcessPageActive))]
-    private ViewModelBase _currentPage;
+    [NotifyPropertyChangedFor(nameof(MapCreatorPageActive))]
+    private PageViewModel _currentPage;
     
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
@@ -22,30 +27,35 @@ public partial class MainViewModel : ViewModelBase
     private bool _isPinned = true;
     
     #endregion
-
-    private HomePageViewModel _homePage = new();
-    private ProcessPageViewModel _processPage = new();
     
-    public MainViewModel()
+    public MainViewModel(PageFactory pageFactory)
     {
-        CurrentPage = _homePage;
+        _pageFactory = pageFactory;
+        CurrentPage = _pageFactory.CreatePage(PageName.Home);
     }
     
-    public bool HomePageActive => CurrentPage == _homePage;
-    public bool ProcessPageActive => CurrentPage == _processPage;
+    public bool HomePageActive => CurrentPage.PageName == PageName.Home;
+    public bool MapCreatorPageActive => CurrentPage.PageName == PageName.MapCreator;
+    public bool ThemeCreatorPageActive => CurrentPage.PageName == PageName.ThemeCreator;
 
     #region Commands
 
     [RelayCommand]
     public void OpenHomePage()
     {
-        CurrentPage = _homePage;
+        CurrentPage = _pageFactory.CreatePage(PageName.Home);
     }
 
     [RelayCommand]
-    public void OpenProcessPage()
+    public void OpenMapCreatorPage()
     {
-        CurrentPage = _processPage;
+        CurrentPage = _pageFactory.CreatePage(PageName.MapCreator);
+    }
+
+    [RelayCommand]
+    public void OpenThemeCreatorPage()
+    {
+        CurrentPage = _pageFactory.CreatePage(PageName.ThemeCreator);
     }
 
     [RelayCommand]

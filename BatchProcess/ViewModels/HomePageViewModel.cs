@@ -1,6 +1,12 @@
-﻿namespace BatchProcess.ViewModels;
+﻿using BatchProcess.Data;
 
-public partial class HomePageViewModel : ViewModelBase
+namespace BatchProcess.ViewModels;
+
+public partial class HomePageViewModel : PageViewModel
 {
+    public HomePageViewModel()
+    {
+        PageName = PageName.Home;
+    }
     public string Test => "toto";
 }
