@@ -56,20 +56,22 @@
                             Margin="0 0 0 10"
                             Classes.Transparent="{Binding MenuIsCollapsed}"
                             Classes.Icon="{Binding MenuIsCollapsed}"
-                            Classes.Active="{Binding MapCreatorPageActive}"
-                            Command="{Binding OpenMapCreatorPageCommand}">
+                            Classes.Active="{Binding ThemeCreatorPageActive}"
+                            Command="{Binding OpenThemeCreatorPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="Icon" Content="&#xe2c2;"></Label>
-                            <Label Content="Map Creator"
+                            <Label Content="Theme Creator"
                                    IsVisible="{Binding !MenuIsCollapsed}" />
                         </StackPanel>
                     </Button>
                     <Button HorizontalAlignment="Stretch" Margin="0 0 0 10"
                             Classes.Transparent="{Binding MenuIsCollapsed}"
-                            Classes.Icon="{Binding MenuIsCollapsed}">
+                            Classes.Icon="{Binding MenuIsCollapsed}"
+                            Classes.Active="{Binding MapCreatorPageActive}"
+                            Command="{Binding OpenMapCreatorPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="Icon" Content="&#xE7F2;"></Label>
-                            <Label Content="Actions" 
+                            <Label Content="Map Creator" 
                                    IsVisible="{Binding !MenuIsCollapsed}" />
                         </StackPanel>
                     </Button>

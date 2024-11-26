@@ -27,6 +27,12 @@ public partial class MainViewModel : ViewModelBase
     private bool _isPinned = true;
     
     #endregion
+
+    public MainViewModel()
+    {
+        _pageFactory = new PageFactory();
+        CurrentPage = _pageFactory.CreatePage(PageName.Home);
+    }
     
     public MainViewModel(PageFactory pageFactory)
     {

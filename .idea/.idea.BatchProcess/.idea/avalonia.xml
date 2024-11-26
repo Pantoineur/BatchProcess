@@ -5,14 +5,18 @@
       <map>
         <entry key="BatchProcess/App.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Controls/ButtonIcon.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Controls/GridCell.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/MainWindow.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Styles/AppDefaultStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Styles/GridCellStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Styles/ProcessPageStyles.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/HomePageView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/HomeView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/MainView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/MapCreatorPageView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/ProcessPageView.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Views/ProcessView.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Views/ThemeCreatorPageView.axaml" value="BatchProcess/BatchProcess.csproj" />
       </map>
     </option>
   </component>

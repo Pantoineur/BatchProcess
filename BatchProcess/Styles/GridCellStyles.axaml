@@ -1,0 +1,15 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <Button Classes="GridCell" Background="Red" Width="10" Height="10"></Button>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="Button.GridCell">
+        <Setter Property="CornerRadius" Value="0"></Setter>
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Blue"></Setter>
+        </Style>
+    </Style>
+</Styles>

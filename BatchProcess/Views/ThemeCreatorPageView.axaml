@@ -3,32 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BatchProcess.ViewModels"
-             xmlns:controls="clr-namespace:BatchProcess.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BatchProcess.Views.MapCreatorPageView"
-             x:DataType="vm:MapCreatorPageViewModel">
-    
-    <Design.DataContext><vm:MapCreatorPageViewModel></vm:MapCreatorPageViewModel></Design.DataContext>
-    
+             x:Class="BatchProcess.Views.ThemeCreatorPageView"
+             x:DataType="vm:ThemeCreatorPageViewModel">
     <Grid ColumnDefinitions="*, Auto">
-        <Grid Grid.Column="0" RowDefinitions="Auto, *"  Margin="3">
-            <Border Grid.Row="0" Background="Brown" Height="30" Margin="0 0 0 5"></Border>
-            
-            <ItemsControl Grid.Row="1">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+        <Border Grid.Column="0">
+            <Border Background="DarkBlue" Margin="3">
                 
-                <ItemsControl.DataTemplates>
-                    
-                </ItemsControl.DataTemplates>
-            </ItemsControl>
-            
-            <Canvas Grid.Row="1" Background="LightCoral" x:Name="CanvasGrid">
-            </Canvas>
-        </Grid>
+            </Border>
+        </Border>
         <Border Grid.Column="1" CornerRadius="10" Background="{DynamicResource PrimaryBackground}" Width="150" Margin="20">
             <StackPanel Margin="20" Width="100">
                 <Button Opacity="1" HorizontalAlignment="Center" Classes="MapElement" Background="{DynamicResource SecondaryBackground}" Width="60" Height="60">

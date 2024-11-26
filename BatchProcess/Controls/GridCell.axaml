@@ -1,0 +1,18 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BatchProcess.Controls">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <controls:GridCell />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|GridCell">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Classes="GridCell" Width="10" Height="10"></Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
