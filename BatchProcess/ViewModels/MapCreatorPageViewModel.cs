@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Media;
 using BatchProcess.Data;
 using BatchProcess.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Avalonia;
 
 namespace BatchProcess.ViewModels;
 
@@ -12,13 +18,19 @@ public partial class MapCreatorPageViewModel : PageViewModel
     public MapCreatorPageViewModel()
     {
         PageName = PageName.MapCreator;
+
+        Width = 10 * TileSize;
+        Height = 10 * TileSize;
+
+        PaintBrush = Brushes.Aqua;
+        
+        Init(30,30);
     }
 
-    public MapCreatorPageViewModel(int rows, int cols)
+    public void Init(int rows, int cols)
     {
         Rows = rows;
         Columns = cols;
-        Tiles = [];
         
         for (var x = 0; x < Columns; x++)
         {
@@ -28,13 +40,49 @@ public partial class MapCreatorPageViewModel : PageViewModel
                 {
                     X = x * TileSize,
                     Y = y * TileSize,
+                    TileDef = new(){TileId = 1} // AFAC 
                 });
             }
         }
     }
 
+    public void PointerMoved(Point coordinates)
+    {
+        Console.WriteLine($"PointerMoved: {coordinates}");
+        var coordX = (int)coordinates.X / TileSize;
+        var coordY = (int)coordinates.Y / TileSize;
+        var index = coordX * _columns + coordY;
+
+        if (Tiles.Count <= index || index < 0) return;
+        
+        var tile = Tiles[index];
+        tile.Background = PaintBrush;
+    }
+
+    [RelayCommand]
+    public void TileHovered(Tile tile)
+    {
+        tile.Background = Brushes.Red;
+    }
+
+    [RelayCommand]
+    public void SetBrush(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                PaintBrush = Brushes.Aqua;
+                break;
+            case 1:
+                PaintBrush = Brushes.Blue;
+                break;
+        }
+    }
+
+    private int _currentBrushId = 0;
+
     [ObservableProperty]
-    private int _tileSize;
+    private int _tileSize = 20;
 
     [ObservableProperty]
     private int _rows;
@@ -42,5 +90,14 @@ public partial class MapCreatorPageViewModel : PageViewModel
     [ObservableProperty]
     private int _columns;
 
-    public ObservableCollection<Tile> Tiles {get; private set;}
+    [ObservableProperty]
+    private int _width;
+    
+    [ObservableProperty]
+    private int _height;
+
+    [ObservableProperty]
+    private IBrush _paintBrush; // AFAC ?
+
+    public ObservableCollection<Tile> Tiles { get; } = [];
 }

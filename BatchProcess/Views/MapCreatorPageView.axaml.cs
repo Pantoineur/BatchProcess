@@ -7,67 +7,67 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
 using BatchProcess.ViewModels;
 
 namespace BatchProcess.Views;
 
 public partial class MapCreatorPageView : UserControl
 {
+    private double _lastWidth = 0;
+    private double _lastHeight = 0;
+    
+    public static bool LeftButtonDown = false;
     public MapCreatorPageView()
     {
         InitializeComponent();
-        
-    }
-
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        base.OnPointerPressed(e);
-
-        var rows = 30;
-        var columns = 30;
-        
-        var width = CanvasGrid.Bounds.Width / rows;
-        var height = CanvasGrid.Bounds.Height / columns;
-
-        Console.WriteLine(CanvasGrid.Bounds.Width);
-
-        if (CanvasGrid.Children.Count > 0)
-        {
-            CanvasGrid.Children.Clear();
-        }
-
-        for (var i = 0; i < rows; i++)
-        {
-            for (var j = 0; j < columns; j++)
-            {
-                var rng = RandomNumberGenerator.GetInt32(0,2);
-                
-                Rectangle rectangle = new()
-                {
-                    Width = width,
-                    Height = height,
-                    Fill = rng == 0 ? Brushes.BlueViolet : Brushes.Red,
-                };
-                rectangle.PointerEntered += (sender, args) =>
-                {
-                    rectangle.Fill = rectangle.Fill.Equals(Brushes.BlueViolet) ? Brushes.Red : Brushes.BlueViolet;
-                };
-                rectangle.SetValue(Canvas.LeftProperty, j * width);
-                rectangle.SetValue(Canvas.TopProperty, i * height);
-                CanvasGrid.Children.Add(rectangle);
-            }
-        }
-    }
-
-
-    public override void Render(DrawingContext context)
-    {
-        base.Render(context);
-        
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
+        
+        // PointerPressed += (s, ee) =>
+        // {
+        //     LeftButtonDown = true;
+        // };
+        
+        AddHandler(PointerPressedEvent, (sender, args) =>
+        {
+            LeftButtonDown = true;
+            e.Handled = true;
+        }, handledEventsToo: true);
+        
+        AddHandler(PointerReleasedEvent, (sender, args) =>
+        {
+            LeftButtonDown = false;
+            e.Handled = true;
+        }, handledEventsToo: true);
+        
+        AddHandler(PointerMovedEvent, (sender, args) =>
+        {
+            e.Handled = true;
+            if (LeftButtonDown)
+            {
+                (DataContext as MapCreatorPageViewModel).PointerMoved(args.GetPosition(MapCreatorGrid));
+            }
+        }, handledEventsToo: true);
+    }
+
+    public override void Render(DrawingContext context)
+    {
+        base.Render(context);
+
+        if (MapCreatorGrid is not null && MapCreatorGrid.Width != _lastWidth && MapCreatorGrid.Height != _lastHeight)
+        {
+            if (MapCreatorGrid.ItemsPanelRoot is not null)
+            {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    MapCreatorGrid.ItemsPanelRoot.Width = MapCreatorGrid.Width;
+                    MapCreatorGrid.ItemsPanelRoot.Height = MapCreatorGrid.Height;
+                });
+            }
+        }
     }
 }

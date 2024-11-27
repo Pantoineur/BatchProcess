@@ -5,6 +5,7 @@
       <map>
         <entry key="BatchProcess/App.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Controls/ButtonIcon.axaml" value="BatchProcess/BatchProcess.csproj" />
+        <entry key="BatchProcess/Controls/GridButtonUC.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Controls/GridCell.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/MainWindow.axaml" value="BatchProcess/BatchProcess.csproj" />
         <entry key="BatchProcess/Styles/AppDefaultStyles.axaml" value="BatchProcess/BatchProcess.csproj" />

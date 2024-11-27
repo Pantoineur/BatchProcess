@@ -4,17 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BatchProcess.ViewModels"
              xmlns:controls="clr-namespace:BatchProcess.Controls"
+             xmlns:models="clr-namespace:BatchProcess.Models"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BatchProcess.Views.MapCreatorPageView"
              x:DataType="vm:MapCreatorPageViewModel">
     
     <Design.DataContext><vm:MapCreatorPageViewModel></vm:MapCreatorPageViewModel></Design.DataContext>
     
+    <UserControl.Styles>
+        <Style Selector="ItemsControl > ContentPresenter" x:DataType="models:Tile">
+            <Setter Property="Canvas.Left" Value="{Binding X}" />
+            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+            <Setter Property="ZIndex" Value="1" />
+        </Style>
+        <Style Selector="Button.Brush:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+    </UserControl.Styles>
+    
     <Grid ColumnDefinitions="*, Auto">
         <Grid Grid.Column="0" RowDefinitions="Auto, *"  Margin="3">
             <Border Grid.Row="0" Background="Brown" Height="30" Margin="0 0 0 5"></Border>
-            
-            <ItemsControl Grid.Row="1">
+            <ItemsControl Grid.Row="1"
+                          x:Name="MapCreatorGrid"
+                          Background="Blue"
+                          ItemsSource="{Binding Tiles}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas/>
@@ -22,21 +37,43 @@
                 </ItemsControl.ItemsPanel>
                 
                 <ItemsControl.DataTemplates>
-                    
+                    <DataTemplate DataType="{x:Type models:Tile}">
+                        
+                        <Panel
+                            Width="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}"
+                            Height="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}">
+                            <Rectangle Stroke="Black" StrokeThickness="1" Fill="{Binding Background}" />
+                            <controls:GridButtonUC
+                                TileInstance="{Binding .}"
+                                PaintCommand="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileHoveredCommand }"
+                                ></controls:GridButtonUC>
+                        </Panel>
+                    </DataTemplate>
                 </ItemsControl.DataTemplates>
             </ItemsControl>
-            
-            <Canvas Grid.Row="1" Background="LightCoral" x:Name="CanvasGrid">
-            </Canvas>
         </Grid>
         <Border Grid.Column="1" CornerRadius="10" Background="{DynamicResource PrimaryBackground}" Width="150" Margin="20">
             <StackPanel Margin="20" Width="100">
-                <Button Opacity="1" HorizontalAlignment="Center" Classes="MapElement" Background="{DynamicResource SecondaryBackground}" Width="60" Height="60">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" Value="LightBlue"/>
-                        </Style>
-                    </Button.Styles>
+                <Button Opacity="1" 
+                        HorizontalAlignment="Center" 
+                        Classes="Brush" 
+                        Background="{DynamicResource SecondaryBackground}" 
+                        Width="60" Height="60"
+                        Command="{Binding SetBrushCommand}">
+                    <Button.CommandParameter>
+                        <sys:Int32>0</sys:Int32>
+                    </Button.CommandParameter>
+                    
+                </Button>
+                <Button Opacity="1" 
+                        HorizontalAlignment="Center" 
+                        Classes="Brush" 
+                        Background="{DynamicResource SecondaryBackground}" 
+                        Width="60" Height="60"
+                        Command="{Binding SetBrushCommand}">
+                    <Button.CommandParameter>
+                        <sys:Int32>1</sys:Int32>
+                    </Button.CommandParameter>
                 </Button>
             </StackPanel>
         </Border>

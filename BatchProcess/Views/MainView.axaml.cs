@@ -9,6 +9,7 @@ public partial class MainView : Window
     public MainView()
     {
         InitializeComponent();
+
     }
 
     private void SideMenu_PointerEvent(object? sender, PointerEventArgs e)
