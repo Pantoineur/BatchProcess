@@ -60,12 +60,6 @@ public partial class MapCreatorPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    public void TileHovered(Tile tile)
-    {
-        tile.Background = Brushes.Red;
-    }
-
-    [RelayCommand]
     public void SetBrush(int id)
     {
         switch (id)

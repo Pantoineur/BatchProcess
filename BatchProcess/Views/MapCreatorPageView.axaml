@@ -45,7 +45,6 @@
                             <Rectangle Stroke="Black" StrokeThickness="1" Fill="{Binding Background}" />
                             <controls:GridButtonUC
                                 TileInstance="{Binding .}"
-                                PaintCommand="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileHoveredCommand }"
                                 ></controls:GridButtonUC>
                         </Panel>
                     </DataTemplate>
