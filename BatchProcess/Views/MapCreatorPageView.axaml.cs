@@ -27,11 +27,6 @@ public partial class MapCreatorPageView : UserControl
     {
         base.OnLoaded(e);
         
-        // PointerPressed += (s, ee) =>
-        // {
-        //     LeftButtonDown = true;
-        // };
-        
         AddHandler(PointerPressedEvent, (sender, args) =>
         {
             LeftButtonDown = true;
@@ -49,7 +44,7 @@ public partial class MapCreatorPageView : UserControl
             e.Handled = true;
             if (LeftButtonDown)
             {
-                (DataContext as MapCreatorPageViewModel).PointerMoved(args.GetPosition(MapCreatorGrid));
+                (DataContext as MapCreatorPageViewModel)?.PointerMoved(args.GetPosition(MapCreatorGrid));
             }
         }, handledEventsToo: true);
     }
@@ -58,14 +53,16 @@ public partial class MapCreatorPageView : UserControl
     {
         base.Render(context);
 
-        if (MapCreatorGrid is not null && MapCreatorGrid.Width != _lastWidth && MapCreatorGrid.Height != _lastHeight)
+        if (MapCreatorGrid is not null 
+            && (MapCreatorGrid.DesiredSize.Width > _lastWidth || MapCreatorGrid.DesiredSize.Width < _lastWidth
+            || MapCreatorGrid.DesiredSize.Height > _lastHeight || MapCreatorGrid.DesiredSize.Height < _lastHeight))
         {
             if (MapCreatorGrid.ItemsPanelRoot is not null)
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                    MapCreatorGrid.ItemsPanelRoot.Width = MapCreatorGrid.Width;
-                    MapCreatorGrid.ItemsPanelRoot.Height = MapCreatorGrid.Height;
+                    MapCreatorGrid.ItemsPanelRoot.Width = MapCreatorGrid.DesiredSize.Width;
+                    MapCreatorGrid.ItemsPanelRoot.Height = MapCreatorGrid.DesiredSize.Height;
                 });
             }
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
@@ -10,6 +11,7 @@ using BatchProcess.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Avalonia;
+using System.Runtime.InteropServices;
 
 namespace BatchProcess.ViewModels;
 
@@ -24,7 +26,7 @@ public partial class MapCreatorPageViewModel : PageViewModel
 
         PaintBrush = Brushes.Aqua;
         
-        Init(30,30);
+        Init(90,10);
     }
 
     public void Init(int rows, int cols)
@@ -32,26 +34,31 @@ public partial class MapCreatorPageViewModel : PageViewModel
         Rows = rows;
         Columns = cols;
         
-        for (var x = 0; x < Columns; x++)
+        List<Tile> tiles = [];
+        CollectionsMarshal.SetCount(tiles, rows * cols);
+        
+        for(var x = 0; x < Columns; x++)
         {
-            for (var y = 0; y < Rows; y++)
+            for(var y = 0; y < Rows; y++)
             {
-                Tiles.Add(new()
+                var index = y * Columns + x;
+                tiles[index] = new()
                 {
-                    X = x * TileSize,
-                    Y = y * TileSize,
-                    TileDef = new(){TileId = 1} // AFAC 
-                });
+                    Y = x * TileSize,
+                    X = y * TileSize,
+                    TileDef = new() { TileId = 1 } // AFAC 
+                };
             }
         }
+        
+        Tiles = new(tiles);
     }
 
     public void PointerMoved(Point coordinates)
     {
-        Console.WriteLine($"PointerMoved: {coordinates}");
         var coordX = (int)coordinates.X / TileSize;
         var coordY = (int)coordinates.Y / TileSize;
-        var index = coordX * _columns + coordY;
+        var index = coordX * Columns + coordY;
 
         if (Tiles.Count <= index || index < 0) return;
         
@@ -93,5 +100,5 @@ public partial class MapCreatorPageViewModel : PageViewModel
     [ObservableProperty]
     private IBrush _paintBrush; // AFAC ?
 
-    public ObservableCollection<Tile> Tiles { get; } = [];
+    public ObservableCollection<Tile> Tiles { get; set; } = [];
 }

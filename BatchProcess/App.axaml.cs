@@ -35,7 +35,7 @@ public partial class App : Application
         {
             if (type.IsSubclassOf(typeof(ViewModelBase)) && !type.Name.Equals("MainViewModel"))
             {
-                collection.AddTransient(type);
+                collection.AddScoped(type);
             }
         }
 

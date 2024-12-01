@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BatchProcess.Data;
 using BatchProcess.ViewModels;
 
@@ -7,6 +8,8 @@ namespace BatchProcess.Factories;
 public class PageFactory
 {
     private readonly Func<PageName, PageViewModel>? _pageViewModelFactory;
+
+    private Dictionary<PageName, PageViewModel> _pageModels = [];
 
     public PageFactory()
     {

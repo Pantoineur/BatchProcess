@@ -24,7 +24,7 @@
     </UserControl.Styles>
     
     <Grid ColumnDefinitions="*, Auto">
-        <Grid Grid.Column="0" RowDefinitions="Auto, *"  Margin="3">
+        <Grid Grid.Column="0" RowDefinitions="Auto, *"  Margin="3" x:Name="Toto">
             <Border Grid.Row="0" Background="Brown" Height="30" Margin="0 0 0 5"></Border>
             <ItemsControl Grid.Row="1"
                           x:Name="MapCreatorGrid"
@@ -32,16 +32,15 @@
                           ItemsSource="{Binding Tiles}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas/>
+                        <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 
                 <ItemsControl.DataTemplates>
-                    <DataTemplate DataType="{x:Type models:Tile}">
-                        
+                    <DataTemplate DataType="{x:Type models:Tile} ">
                         <Panel
-                            Width="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}"
-                            Height="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}">
+                               Width="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}"
+                               Height="{Binding $parent[UserControl].((vm:MapCreatorPageViewModel)DataContext).TileSize}">
                             <Rectangle Stroke="Black" StrokeThickness="1" Fill="{Binding Background}" />
                             <controls:GridButtonUC
                                 TileInstance="{Binding .}"
