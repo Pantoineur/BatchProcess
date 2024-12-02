@@ -6,6 +6,7 @@ using BatchProcess.Data;
 using BatchProcess.Factories;
 using BatchProcess.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using TowerWarZ.MapCreator.Core;
 
 namespace BatchProcess;
 
@@ -29,6 +30,7 @@ public partial class App : Application
             // PageName.About => expr,
             _ => throw new ArgumentOutOfRangeException(nameof(name), name, null)
         });
+        collection.AddSingleton<TileDefGenerator>();
         
         var types = typeof(ViewModelBase).Assembly.GetTypes();
         foreach (var type in types)

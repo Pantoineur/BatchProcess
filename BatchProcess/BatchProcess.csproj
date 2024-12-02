@@ -37,4 +37,8 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TowerWarZ.MapCreator.Core\TowerWarZ.MapCreator.Core.csproj" />
+    </ItemGroup>
 </Project>
