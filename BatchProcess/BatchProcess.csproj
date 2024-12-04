@@ -18,6 +18,9 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview2" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+        <PackageReference Include="OpenTK" Version="4.9.1" />
+        <PackageReference Include="OpenTK.Graphics" Version="4.9.1" />
+        <PackageReference Include="OpenTK.Core" Version="4.9.1" />
     </ItemGroup>
 
     <ItemGroup>

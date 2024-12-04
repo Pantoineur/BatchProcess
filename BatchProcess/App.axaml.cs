@@ -50,7 +50,7 @@ public partial class App : Application
                 DataContext = services.GetRequiredService<MainViewModel>()
             };
         }
-
+        
         base.OnFrameworkInitializationCompleted();
     }
 }

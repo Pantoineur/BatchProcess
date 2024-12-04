@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Collections.ObjectModel;
 
 namespace BatchProcess;
 
@@ -17,5 +18,6 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            .With(new Win32PlatformOptions { RenderingMode = new Collection<Win32RenderingMode> { Win32RenderingMode.Wgl } })
             .LogToTrace();
 }
