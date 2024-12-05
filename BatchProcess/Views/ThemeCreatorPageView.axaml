@@ -8,12 +8,17 @@
              x:Class="BatchProcess.Views.ThemeCreatorPageView"
              x:DataType="vm:ThemeCreatorPageViewModel">
     
-    <Grid ColumnDefinitions="Auto *">
+    <Grid ColumnDefinitions="Auto, *">
         <Border Grid.Column="0" Background="Azure" Width="200">
-            <ColorPicker Color="{Binding BackgroundColor}" Width="200" Height="200"></ColorPicker>
+            <StackPanel Margin="5" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Command="{Binding ToggleWireframeCommand}" Height="40" FontSize="20" Foreground="Black">Wireframe</Button>
+                <TextBlock Height="20" FontSize="20" Foreground="Black">Color picker</TextBlock>
+                <ColorPicker Cursor="Hand" Color="{Binding BackgroundColor}" Height="20" Width="100"/>
+            </StackPanel>
+            
         </Border>
         <Border Grid.Column="1" Background="Blue">
-            <controls:MainWindowGLRendering SelectedColor="{Binding BackgroundColor}" Focusable="True"/>
+            <controls:MainWindowGLRendering Wireframe="{Binding Wireframe}" SelectedColor="{Binding SelectedColor}" Focusable="True"/>
         </Border>
     </Grid>
     

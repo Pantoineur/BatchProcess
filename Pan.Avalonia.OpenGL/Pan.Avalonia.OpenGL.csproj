@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Avalonia.OpenGL">
+        <HintPath>..\BatchProcess\bin\Debug\net8.0\Avalonia.OpenGL.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.1.0" />
+      <PackageReference Include="OpenTK" Version="4.9.1" />
+    </ItemGroup>
+
+</Project>

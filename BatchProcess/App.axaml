@@ -15,6 +15,7 @@
         <StyleInclude Source="Styles/ProcessPageStyles.axaml"></StyleInclude>
         <StyleInclude Source="Styles/GridCellStyles.axaml"></StyleInclude>
         <StyleInclude Source="Controls/ButtonIcon.axaml"></StyleInclude>
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
     </Application.Styles>
              
              <Application.Resources>

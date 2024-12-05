@@ -42,6 +42,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Pan.Avalonia.OpenGL\Pan.Avalonia.OpenGL.csproj" />
       <ProjectReference Include="..\TowerWarZ.MapCreator.Core\TowerWarZ.MapCreator.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="OpenGL\" />
     </ItemGroup>
 </Project>
