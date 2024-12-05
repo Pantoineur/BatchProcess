@@ -6,28 +6,33 @@ namespace BatchProcess.OpenGL.Models;
 
 public class Shader
 {
-    private const string SHADERS_PATH = @"..\Shaders";
+    private const string SHADERS_PATH = @"D:\Dev\Other\BatchProcess\BatchProcess\BatchProcess\OpenGL\Shaders";
 
-    public string FragmentPath { get; init; }
-    public string VertexPath { get; init; }
+    public string Fragment { get; init; }
+    public string Vertex { get; init; }
     public int ShaderProgram { get; private set; }
 
     public Shader(string shaderName)
     {
-        FragmentPath = Path.Combine(SHADERS_PATH, shaderName, $"{shaderName}.frag");
-        VertexPath = Path.Combine(SHADERS_PATH, shaderName, $"{shaderName}.vert");
+        Fragment = File.ReadAllText(Path.Combine(SHADERS_PATH, shaderName, $"{shaderName}.frag"));
+        Vertex = File.ReadAllText(Path.Combine(SHADERS_PATH, shaderName, $"{shaderName}.vert"));
 
         Init();
     }
 
     public Shader(string vertexPath, string fragmentPath)
     {
-        FragmentPath = fragmentPath;
-        VertexPath = vertexPath;
+        Fragment = File.ReadAllText(fragmentPath);
+        Vertex = File.ReadAllText(vertexPath);
 
         Init();
     }
 
+    public void Use()
+    {
+        GL.UseProgram(ShaderProgram);
+    }
+    
     private void Init()
     {
         CompileShader();
@@ -42,21 +47,36 @@ public class Shader
     private void CompileShader()
     {
         var vertexShader = GL.CreateShader(ShaderType.VertexShader);
-        GL.ShaderSource(vertexShader, VertexPath);
+        GL.ShaderSource(vertexShader, Vertex);
         GL.CompileShader(vertexShader);
         
         var fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-        GL.ShaderSource(fragmentShader, FragmentPath);
+        GL.ShaderSource(fragmentShader, Fragment);
         GL.CompileShader(fragmentShader);
         
         ShaderProgram = GL.CreateProgram();
         GL.AttachShader(ShaderProgram, vertexShader);
         GL.AttachShader(ShaderProgram, fragmentShader);
-        GL.LinkProgram(ShaderProgram);
+        Link(ShaderProgram);
         
+        GL.DetachShader(ShaderProgram, vertexShader);
+        GL.DetachShader(ShaderProgram, fragmentShader);
         GL.DeleteShader(vertexShader);
         GL.DeleteShader(fragmentShader);
-        
-        GL.UseProgram(ShaderProgram);
     }
+
+    private static void Link(int program)
+    {
+        GL.LinkProgram(program);
+
+        // Check for linking errors
+        GL.GetProgram(program, GetProgramParameterName.LinkStatus, out var code);
+        if (code != (int)All.True)
+        {
+            // We can use `GL.GetProgramInfoLog(program)` to get information about the error.
+            var error = GL.GetProgramInfoLog(program);
+            throw new Exception($"Error occurred whilst linking Program({program}): \n{error}");
+        }
+    }
+    
 }

@@ -4,6 +4,7 @@ using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 using Avalonia;
 using Avalonia.Media;
+using BatchProcess.OpenGL.Models;
 using Window = Avalonia.Controls.Window;
 
 namespace BatchProcess.Controls
@@ -12,11 +13,6 @@ namespace BatchProcess.Controls
     {
         System.Numerics.Vector3 _color;
 
-        // Create the vertices for our triangle. These are listed in normalized device coordinates (NDC)
-        // In NDC, (0, 0) is the center of the screen.
-        // Negative X coordinates move to the left, positive X move to the right.
-        // Negative Y coordinates move to the bottom, positive Y move to the top.
-        // OpenGL only supports rendering in 3D, so to create a flat triangle, the Z coordinate will be kept as 0.
         private readonly float[] _vertices =
         {
             -0.5f, -0.5f, 0.0f, // Bottom-left vertex
@@ -24,16 +20,10 @@ namespace BatchProcess.Controls
              0.0f,  0.5f, 0.0f  // Top vertex
         };
 
-        // These are the handles to OpenGL objects. A handle is an integer representing where the object lives on the
-        // graphics card. Consider them sort of like a pointer; we can't do anything with them directly, but we can
-        // send them to OpenGL functions that need them.
-
-        // What these objects are will be explained in OnLoad.
         private int _vertexBufferObject;
-
         private int _vertexArrayObject;
-
-
+        
+        private Shader _shader;
         // Handle Avalonia Color Picker property and update 
 
         public static readonly StyledProperty<Color> SelectedColorProperty =
@@ -66,6 +56,9 @@ namespace BatchProcess.Controls
             GL.BindVertexArray(_vertexArrayObject);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
+
+            _shader = new("Default");
+            _shader.Use();
         }
 
 
@@ -76,12 +69,16 @@ namespace BatchProcess.Controls
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
 
-            GL.ClearColor(new Color4(SelectedColor.R, SelectedColor.G, SelectedColor.B, 255));
+            GL.ClearColor(new Color4( 255/*SelectedColor.R*/, 0/*SelectedColor.G*/, 0/*SelectedColor.B*/, 255));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+            
+            _shader.Use();
+            
+            GL.BindVertexArray(_vertexArrayObject);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, _vertices.Length);
 
             //Clean up the opengl state back to how we got it
             GL.Disable(EnableCap.DepthTest); 
-
         }
 
         //OpenTkTeardown is called when the control is being destroyed
