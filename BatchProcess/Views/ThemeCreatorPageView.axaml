@@ -14,11 +14,26 @@
                 <Button Command="{Binding ToggleWireframeCommand}" Height="40" FontSize="20" Foreground="Black">Wireframe</Button>
                 <TextBlock Height="20" FontSize="20" Foreground="Black">Color picker</TextBlock>
                 <ColorPicker Cursor="Hand" Color="{Binding BackgroundColor}" Height="20" Width="100"/>
+                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20" Foreground="Black">Horizontal Offset</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Slider HorizontalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="0.1" Width="120" Name="HOffsetSlider" Value="{Binding HOffset}" Minimum="-0.5" Maximum="0.5"></Slider>
+                    <Label Margin="5 0 0 0" Width="40" Height="20" HorizontalAlignment="Center" Content="{Binding HOffset, StringFormat=0.0}"></Label>
+                </StackPanel>
+                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20" Foreground="Black">Blend</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Slider HorizontalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="0.05" Width="120" Name="BlendSlider" Value="{Binding Blend}" Minimum="0" Maximum="1"></Slider>
+                    <Label Margin="5 0 0 0" Width="40" Height="20" HorizontalAlignment="Center" Content="{Binding Blend, StringFormat=0.0}"></Label>
+                </StackPanel>
             </StackPanel>
             
         </Border>
         <Border Grid.Column="1" Background="Blue">
-            <controls:MainWindowGLRendering Wireframe="{Binding Wireframe}" SelectedColor="{Binding SelectedColor}" Focusable="True"/>
+            <controls:MainWindowGLRendering 
+                Wireframe="{Binding Wireframe}" 
+                SelectedColor="{Binding SelectedColor}"
+                HOffset="{Binding HOffset}"
+                Blend="{Binding Blend}"
+                Focusable="True"/>
         </Border>
     </Grid>
     

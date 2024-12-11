@@ -13,8 +13,10 @@ public partial class ThemeCreatorPageViewModel : PageViewModel
     private readonly TileDefGenerator _tileDefGenerator;
     
     [ObservableProperty] private Color _backgroundColor = Colors.Chocolate;
-    [ObservableProperty] private bool _wireframe = false;
+    [ObservableProperty] private bool _wireframe;
     [ObservableProperty] private Vector3 _selectedColor;
+    [ObservableProperty] private float _hOffset;
+    [ObservableProperty] private float _blend;
 
     public ThemeCreatorPageViewModel()
     {

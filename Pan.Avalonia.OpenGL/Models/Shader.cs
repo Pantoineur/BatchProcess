@@ -1,11 +1,12 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using GlmSharp;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace BatchProcess.OpenGL.Models;
+namespace Pan.Avalonia.OpenGL.Models;
 
 public class Shader
 {
-    private string _shadersPath = @"D:\Dev\Other\BatchProcess\BatchProcess\Pan.Avalonia.OpenGL\Shaders";
+    private string _shadersPath = @"Resources\OpenGL\Shaders";
     
     private Dictionary<string, int> _uniformLocations = [];
 
@@ -15,8 +16,6 @@ public class Shader
 
     public Shader(string shaderName)
     {
-        _shadersPath = AppDomain.CurrentDomain.BaseDirectory;
-        
         Fragment = File.ReadAllText(Path.Combine(_shadersPath, shaderName, $"{shaderName}.frag"));
         Vertex = File.ReadAllText(Path.Combine(_shadersPath, shaderName, $"{shaderName}.vert"));
 
@@ -89,10 +88,16 @@ public class Shader
         }
     }
 
+    public void SetFloat(string parameterName, float value)
+    {
+        if (_uniformLocations.TryGetValue(parameterName, out var location))
+        {
+            GL.Uniform1(location, value);
+        }
+    }
+
     public void SetVector3(string parameterName, Vector3 vec)
     {
-        GL.UseProgram(Handle);
-
         if (_uniformLocations.TryGetValue(parameterName, out var location))
         {
             GL.Uniform3(location, vec);
@@ -101,11 +106,25 @@ public class Shader
 
     public void SetVector4(string parameterName, Vector4 vec)
     {
-        GL.UseProgram(Handle);
-
         if (_uniformLocations.TryGetValue(parameterName, out var location))
         {
             GL.Uniform4(location, vec);
+        }
+    }
+
+    public void SetInt(string parameterName, int value)
+    {
+        if (_uniformLocations.TryGetValue(parameterName, out var location))
+        {
+            GL.Uniform1(location, value);
+        }
+    }
+
+    public void SetMat4(string parameterName, mat4 matrix)
+    {
+        if (_uniformLocations.TryGetValue(parameterName, out var location))
+        {
+            GL.UniformMatrix4(location, 1, transpose: false, matrix.Values1D);
         }
     }
 }

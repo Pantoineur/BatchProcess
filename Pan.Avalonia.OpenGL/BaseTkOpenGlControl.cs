@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -6,7 +7,7 @@ using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using Avalonia.Rendering;
 using Avalonia.Threading;
-using BatchProcess.OpenGL;
+using Pan.Avalonia.OpenGL;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Avalonia_Sample;
@@ -23,11 +24,14 @@ public abstract class BaseTkOpenGlControl : OpenGlControlBase, ICustomHitTest
 
     private GlInterface gl;
 
+    private float _deltaTime = 0f;
+    private Stopwatch _stopwatch = new();
+
     /// <summary>
     /// OpenTkRender is called once a frame to draw to the control.
     /// You can do anything you want here, but make sure you undo any configuration changes after, or you may get weirdness with other controls.
     /// </summary>
-    protected virtual void OpenTkRender()
+    protected virtual void OpenTkRender(float deltaTime)
     {
         
     }
@@ -56,7 +60,11 @@ public abstract class BaseTkOpenGlControl : OpenGlControlBase, ICustomHitTest
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
         this.gl = gl;
-
+        
+        _stopwatch.Stop();
+        _deltaTime = _stopwatch.Elapsed.Milliseconds / 1000f;
+        _stopwatch = Stopwatch.StartNew();
+        
         //Update last key states
         KeyboardState.OnFrame();
 
@@ -68,7 +76,7 @@ public abstract class BaseTkOpenGlControl : OpenGlControlBase, ICustomHitTest
         //Tell our subclass to render
         if (Bounds.Width != 0 && Bounds.Height != 0)
         {
-            OpenTkRender();
+            OpenTkRender(_deltaTime);
         }
 
         //Schedule next UI update with avalonia
@@ -78,6 +86,7 @@ public abstract class BaseTkOpenGlControl : OpenGlControlBase, ICustomHitTest
 
     protected sealed override void OnOpenGlInit(GlInterface gl)
     {
+        _stopwatch = Stopwatch.StartNew();
         //Initialize the OpenTK<->Avalonia Bridge
         _avaloniaTkContext = new AvaloniaGLContext(gl);
 

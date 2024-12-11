@@ -2,7 +2,7 @@
 using Avalonia.OpenGL;
 using OpenTK;
 
-namespace BatchProcess.OpenGL;
+namespace Pan.Avalonia.OpenGL;
 
 public class AvaloniaGLContext : IBindingsContext
 {

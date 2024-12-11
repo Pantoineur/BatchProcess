@@ -16,11 +16,13 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview2" />
+        <PackageReference Include="GlmSharp" Version="0.9.8" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
         <PackageReference Include="OpenTK" Version="4.9.1" />
         <PackageReference Include="OpenTK.Graphics" Version="4.9.1" />
         <PackageReference Include="OpenTK.Core" Version="4.9.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +30,18 @@
       <AvaloniaResource Include="Assets\Fonts\AkkoPro-Regular.ttf" />
       <None Remove="Assets\Fonts\Phosphor-Fill.ttf" />
       <AvaloniaResource Include="Assets\Fonts\Phosphor-Fill.ttf" />
+      <None Update="Resources\OpenGL\Shaders\Default\default.frag">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\OpenGL\Shaders\Default\default.vert">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Textures\awesomeface.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Textures\container.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -44,9 +58,5 @@
     <ItemGroup>
       <ProjectReference Include="..\Pan.Avalonia.OpenGL\Pan.Avalonia.OpenGL.csproj" />
       <ProjectReference Include="..\TowerWarZ.MapCreator.Core\TowerWarZ.MapCreator.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="OpenGL\" />
     </ItemGroup>
 </Project>
