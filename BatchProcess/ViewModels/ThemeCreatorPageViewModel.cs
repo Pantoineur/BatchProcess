@@ -16,11 +16,12 @@ public partial class ThemeCreatorPageViewModel : PageViewModel
     [ObservableProperty] private bool _wireframe;
     [ObservableProperty] private Vector3 _selectedColor;
     [ObservableProperty] private float _hOffset;
-    [ObservableProperty] private float _blend;
+    [ObservableProperty] private float _blend = .2f;
+    [ObservableProperty] private float _fov = 80f;
 
     public ThemeCreatorPageViewModel()
     {
-        _tileDefGenerator = new TileDefGenerator();
+        _tileDefGenerator = new();
     }
 
     partial void OnWireframeChanged(bool value)

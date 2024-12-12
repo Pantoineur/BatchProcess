@@ -9,20 +9,28 @@
              x:DataType="vm:ThemeCreatorPageViewModel">
     
     <Grid ColumnDefinitions="Auto, *">
-        <Border Grid.Column="0" Background="Azure" Width="200">
+        <Border Grid.Column="0" Background="#2B2B2B" Width="200">
             <StackPanel Margin="5" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Command="{Binding ToggleWireframeCommand}" Height="40" FontSize="20" Foreground="Black">Wireframe</Button>
-                <TextBlock Height="20" FontSize="20" Foreground="Black">Color picker</TextBlock>
+                <Button Command="{Binding ToggleWireframeCommand}" Height="40" FontSize="20">Wireframe</Button>
+                <TextBlock Height="20" FontSize="20">Color picker</TextBlock>
                 <ColorPicker Cursor="Hand" Color="{Binding BackgroundColor}" Height="20" Width="100"/>
-                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20" Foreground="Black">Horizontal Offset</TextBlock>
+                
+                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20">Horizontal Offset</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <Slider HorizontalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="0.1" Width="120" Name="HOffsetSlider" Value="{Binding HOffset}" Minimum="-0.5" Maximum="0.5"></Slider>
                     <Label Margin="5 0 0 0" Width="40" Height="20" HorizontalAlignment="Center" Content="{Binding HOffset, StringFormat=0.0}"></Label>
                 </StackPanel>
-                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20" Foreground="Black">Blend</TextBlock>
+                
+                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20">Blend</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <Slider HorizontalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="0.05" Width="120" Name="BlendSlider" Value="{Binding Blend}" Minimum="0" Maximum="1"></Slider>
                     <Label Margin="5 0 0 0" Width="40" Height="20" HorizontalAlignment="Center" Content="{Binding Blend, StringFormat=0.0}"></Label>
+                </StackPanel>
+                
+                <TextBlock Margin="0 30 0 -10" Height="20" FontSize="20">Fov</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Slider HorizontalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="1" Width="120" Name="FovSlider" Value="{Binding Fov}" Minimum="40" Maximum="120"></Slider>
+                    <Label Margin="5 0 0 0" Width="40" Height="20" HorizontalAlignment="Center" Content="{Binding Fov, StringFormat=0}"></Label>
                 </StackPanel>
             </StackPanel>
             
@@ -33,6 +41,7 @@
                 SelectedColor="{Binding SelectedColor}"
                 HOffset="{Binding HOffset}"
                 Blend="{Binding Blend}"
+                FOV="{Binding Fov}"
                 Focusable="True"/>
         </Border>
     </Grid>
