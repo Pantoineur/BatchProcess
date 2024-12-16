@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Input;
 using BatchProcess.Models.OpenGL;
 using GlmSharp;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using Pan.Avalonia.OpenGL.Models;
 
 namespace BatchProcess.Controls
@@ -99,6 +100,12 @@ namespace BatchProcess.Controls
 
         private mat4 _viewMatrix;
         private mat4 _projectionMatrix;
+
+        private vec3 _cameraFront = -vec3.UnitZ;
+        private vec3 _cameraUp = vec3.UnitY;
+        private vec3 _cameraRight = -vec3.UnitX;
+        private vec3 _cameraPos = vec3.Zero;
+        private float _cameraSpeed = 1.0f;
         
         private readonly float _rotationSpeed = 30.0f;
         private readonly float _scaleSpeed = 0.5f;
@@ -206,12 +213,16 @@ namespace BatchProcess.Controls
             _shader.SetInt("tex1", 0);
             _shader.SetInt("tex2", 1);
             
-            _viewMatrix = mat4.Translate(-2.0f, 0.0f, -2.0f);
         }
+
+        private float camX, camZ = 0.0f;
+        private const float radius = 10.0f;
 
         //OpenTkRender (OnRenderFrame) is called once a frame. The aspect ratio and keyboard state are configured prior to this being called.
         protected override void OpenTkRender(float deltaTime)
         {
+            DoUpdate(deltaTime);
+            
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -221,6 +232,11 @@ namespace BatchProcess.Controls
             GL.PolygonMode(TriangleFace.FrontAndBack, Wireframe ? PolygonMode.Line : PolygonMode.Fill);
             _projectionMatrix = mat4.Perspective(glm.Radians(FOV), (float)Bounds.Width / (float)Bounds.Height, 0.1f, 100.0f);
 
+            // _viewMatrix = mat4.Translate(_cameraPos);
+            camX += _cameraSpeed * deltaTime;
+            camZ += _cameraSpeed * deltaTime;
+            _viewMatrix = mat4.LookAt(new vec3(glm.Sin(camX), 0, glm.Cos(camZ)) * radius, new vec3(0.0f, 0.0f, 0.0f), new vec3(0.0f, 1.0f, 0.0f));
+            
             if (_shader is not null)
             {
                 _hahaTex?.Use(TextureUnit.Texture1);
@@ -249,6 +265,26 @@ namespace BatchProcess.Controls
             //Clean up the opengl state back to how we got it
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
+        }
+
+        private void DoUpdate(float deltaTime)
+        {
+            if (KeyboardState.IsKeyDown(Key.Z))
+            {
+                _cameraPos -= _cameraSpeed * _cameraFront * deltaTime;
+            }
+            if (KeyboardState.IsKeyDown(Key.S))
+            {
+                _cameraPos += _cameraSpeed * _cameraFront * deltaTime;
+            }
+            if (KeyboardState.IsKeyDown(Key.D))
+            {
+                _cameraPos += _cameraSpeed * _cameraRight * deltaTime;
+            }
+            if (KeyboardState.IsKeyDown(Key.Q))
+            {
+                _cameraPos -= _cameraSpeed * _cameraRight * deltaTime;
+            }
         }
 
         protected override void OpenTkTeardown()

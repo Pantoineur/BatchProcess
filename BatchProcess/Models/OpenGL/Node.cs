@@ -7,6 +7,7 @@ public class Node
 {
     private mat4 _modelMatrix;
     
+    public Node(){ }
     public Node(vec3 position)
     {
         _modelMatrix = mat4.Translate(position);
@@ -32,6 +33,11 @@ public class Node
         _modelMatrix.m30 = position.x;
         _modelMatrix.m31 = position.y;
         _modelMatrix.m32 = position.z;
+    }
+
+    public vec3 GetPosition()
+    {
+        return new(_modelMatrix.m30, _modelMatrix.m31, _modelMatrix.m32);
     }
 
     public mat4 Matrix => _modelMatrix;
