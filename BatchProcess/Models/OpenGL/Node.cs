@@ -1,44 +1,77 @@
-﻿using GlmSharp;
+﻿
 using OpenTK.Mathematics;
 
 namespace BatchProcess.Models.OpenGL;
 
 public class Node
 {
-    private mat4 _modelMatrix;
-    
+    private Matrix4 _modelMatrix;
+    public Vector3 Position { get; set; }
+    public float Yaw { get; set; }
+    public float Pitch { get; set; }
+    public float Roll { get; set; }
+    public Quaternion Rotation { get; set; }
+
     public Node(){ }
-    public Node(vec3 position)
+    public Node(Vector3 position)
     {
-        _modelMatrix = mat4.Translate(position);
+        Position = position;
+        _modelMatrix = Matrix4.CreateTranslation(position);
+    }
+    public Node(Vector3 position, Vector3 rotationEuler)
+    {
+        Yaw = rotationEuler.X;
+        Pitch = rotationEuler.Y;
+        Roll = rotationEuler.Z;
+        Position = position;
+        
+        Rotation = Quaternion.FromEulerAngles(Pitch, Yaw, Roll);
+        _modelMatrix = Matrix4.CreateFromQuaternion(Rotation) * Matrix4.CreateTranslation(position);
     }
 
-    public void RotateEuler(float angle, vec3 axis)
+    public void RotateEuler(float angle, Vector3 axis)
     {
-        _modelMatrix *= mat4.Rotate(glm.Radians(angle), axis);
+        // _modelMatrix *= Matrix4.CreateRotationY(axis.Y * angle) * Matrix4.CreateRotationX(axis.X * angle) * Matrix4.CreateRotationZ(axis.Z * angle);
     }
 
-    public void Scale(vec3 scale)
+    public void Scale(Vector3 scale)
     {
-        _modelMatrix *= mat4.Scale(scale);
+        _modelMatrix *= Matrix4.CreateScale(scale);
     }
 
-    public void Translate(vec3 translation)
+    public void Translate(Vector3 translation)
     {
-        _modelMatrix *= mat4.Translate(translation);
+        _modelMatrix *= Matrix4.CreateTranslation(translation);
     }
 
-    public void SetPosition(vec3 position)
+    public void SetPosition(Vector3 position)
     {
-        _modelMatrix.m30 = position.x;
-        _modelMatrix.m31 = position.y;
-        _modelMatrix.m32 = position.z;
+        Position = position;
+        
+        _modelMatrix.M41 = position.X;
+        _modelMatrix.M42 = position.Y;
+        _modelMatrix.M43 = position.Z;
     }
 
-    public vec3 GetPosition()
+    public Vector3 GetPosition()
     {
-        return new(_modelMatrix.m30, _modelMatrix.m31, _modelMatrix.m32);
+        return Position;
     }
 
-    public mat4 Matrix => _modelMatrix;
+    public Matrix4 Matrix => _modelMatrix;
+
+    public virtual void Update(float deltaTime)
+    {
+        
+    }
+
+    public virtual void Init()
+    {
+        
+    }
+
+    public virtual void Destroy()
+    {
+        
+    }
 }

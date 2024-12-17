@@ -14,9 +14,12 @@
 
     <ItemGroup>
       <PackageReference Include="Avalonia" Version="11.1.0" />
-      <PackageReference Include="GlmSharp" Version="0.9.8" />
       <PackageReference Include="OpenTK" Version="4.9.1" />
       <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pan.Common.Math\Pan.Common.Math.csproj" />
     </ItemGroup>
 
 </Project>

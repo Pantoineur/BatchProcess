@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using Avalonia_Sample;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 using Avalonia;
 using Avalonia.Input;
+using BatchProcess.Models;
 using BatchProcess.Models.OpenGL;
-using GlmSharp;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+using Pan.Avalonia.OpenGL;
 using Pan.Avalonia.OpenGL.Models;
 
 namespace BatchProcess.Controls
@@ -15,18 +14,7 @@ namespace BatchProcess.Controls
     public class MainWindowGLRendering : BaseTkOpenGlControl
     {
         private bool _isDragging;
-        private vec3 _cameraMovement;
         
-        private readonly float[] _vertices =
-        [
-            // ** Rectangle **
-            // Vertices         // Tex coords
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex (front) 0
-            0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // Bottom-right vertex (front) 1
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, // Top-left vertex (front) 2
-            0.5f,   0.5f, 0.0f, 1.0f, 1.0f  // Top-right vertex (front) 3
-        ];
-
         private readonly float[] _verticesCube =
         [
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
@@ -98,19 +86,11 @@ namespace BatchProcess.Controls
         private int _elementBufferObject;
         private int _vertexArrayObject;
 
-        private mat4 _viewMatrix;
-        private mat4 _projectionMatrix;
+        private Matrix4 _projectionMatrix;
 
-        private vec3 _cameraFront = -vec3.UnitZ;
-        private vec3 _cameraUp = vec3.UnitY;
-        private vec3 _cameraRight = -vec3.UnitX;
-        private vec3 _cameraPos = vec3.Zero;
-        private float _cameraSpeed = 1.0f;
+        private Camera _mainCamera;
         
         private readonly float _rotationSpeed = 30.0f;
-        private readonly float _scaleSpeed = 0.5f;
-        private float _scale = 0;
-        private bool _decrease = true;
         
         private Shader? _shader;
         private Texture? _containerTex;
@@ -160,6 +140,17 @@ namespace BatchProcess.Controls
         {
             get => GetValue(FOVProperty);
             set => SetValue(FOVProperty, value);
+        }
+
+        private float _toto;
+
+        public static readonly DirectProperty<MainWindowGLRendering, float> TotoProperty = AvaloniaProperty.RegisterDirect<MainWindowGLRendering, float>(
+            nameof(Toto), o => o.Toto, (o, v) => o.Toto = v);
+
+        public float Toto
+        {
+            get => _toto;
+            set => SetAndRaise(TotoProperty, ref _toto, value);
         }
 
         protected override void OpenTkInit()
@@ -212,11 +203,10 @@ namespace BatchProcess.Controls
             _shader.Use();
             _shader.SetInt("tex1", 0);
             _shader.SetInt("tex2", 1);
-            
-        }
 
-        private float camX, camZ = 0.0f;
-        private const float radius = 10.0f;
+            _mainCamera = new(new (0, 0, -5.0f), Vector3.Zero,
+                float.DegreesToRadians(FOV),(float)Bounds.Width / (float)Bounds.Height);
+        }
 
         //OpenTkRender (OnRenderFrame) is called once a frame. The aspect ratio and keyboard state are configured prior to this being called.
         protected override void OpenTkRender(float deltaTime)
@@ -230,12 +220,9 @@ namespace BatchProcess.Controls
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
             GL.PolygonMode(TriangleFace.FrontAndBack, Wireframe ? PolygonMode.Line : PolygonMode.Fill);
-            _projectionMatrix = mat4.Perspective(glm.Radians(FOV), (float)Bounds.Width / (float)Bounds.Height, 0.1f, 100.0f);
-
-            // _viewMatrix = mat4.Translate(_cameraPos);
-            camX += _cameraSpeed * deltaTime;
-            camZ += _cameraSpeed * deltaTime;
-            _viewMatrix = mat4.LookAt(new vec3(glm.Sin(camX), 0, glm.Cos(camZ)) * radius, new vec3(0.0f, 0.0f, 0.0f), new vec3(0.0f, 1.0f, 0.0f));
+            
+            _mainCamera.UpdateProjection(FOV, (float)Bounds.Width / (float)Bounds.Height);
+            _mainCamera.UpdateView();
             
             if (_shader is not null)
             {
@@ -246,8 +233,8 @@ namespace BatchProcess.Controls
                 _shader.SetVector4("InColor", new(SelectedColor, 1));
                 _shader.SetFloat("hOffset", HOffset);
                 _shader.SetFloat("blend", Blend);
-                _shader.SetMat4("view", _viewMatrix);
-                _shader?.SetMat4("projection", _projectionMatrix);
+                _shader.SetMat4("view", _mainCamera.ViewMatrix);
+                _shader?.SetMat4("projection", _mainCamera.ProjectionMatrix);
             }
             
             GL.BindVertexArray(_vertexArrayObject);
@@ -269,21 +256,21 @@ namespace BatchProcess.Controls
 
         private void DoUpdate(float deltaTime)
         {
-            if (KeyboardState.IsKeyDown(Key.Z))
+            if (KeyboardState.WasKeyDownLastFrame(Key.Z))
             {
-                _cameraPos -= _cameraSpeed * _cameraFront * deltaTime;
+                _mainCamera.Move(Direction.Forward, deltaTime);
             }
             if (KeyboardState.IsKeyDown(Key.S))
             {
-                _cameraPos += _cameraSpeed * _cameraFront * deltaTime;
+                _mainCamera.Move(Direction.Backward, deltaTime);
             }
             if (KeyboardState.IsKeyDown(Key.D))
             {
-                _cameraPos += _cameraSpeed * _cameraRight * deltaTime;
+                _mainCamera.Move(Direction.Right, deltaTime);
             }
             if (KeyboardState.IsKeyDown(Key.Q))
             {
-                _cameraPos -= _cameraSpeed * _cameraRight * deltaTime;
+                _mainCamera.Move(Direction.Left, deltaTime);
             }
         }
 

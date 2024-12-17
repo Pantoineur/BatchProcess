@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Avalonia.Input;
 
-namespace Avalonia_Sample;
+namespace Pan.Avalonia.OpenGL;
 
 public class AvaloniaKeyboardState
 {

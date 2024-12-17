@@ -1,5 +1,5 @@
-﻿using GlmSharp;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using Pan.Common.Math;
 using OpenTK.Mathematics;
 
 namespace Pan.Avalonia.OpenGL.Models;
@@ -120,11 +120,11 @@ public class Shader
         }
     }
 
-    public void SetMat4(string parameterName, mat4 matrix)
+    public void SetMat4(string parameterName, Matrix4 matrix)
     {
         if (_uniformLocations.TryGetValue(parameterName, out var location))
         {
-            GL.UniformMatrix4(location, 1, transpose: false, matrix.Values1D);
+            GL.UniformMatrix4(location, 1, transpose: false, matrix.ToFloatArray());
         }
     }
 }

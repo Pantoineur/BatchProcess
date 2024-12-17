@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -7,10 +6,9 @@ using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using Avalonia.Rendering;
 using Avalonia.Threading;
-using Pan.Avalonia.OpenGL;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Avalonia_Sample;
+namespace Pan.Avalonia.OpenGL;
 
 public abstract class BaseTkOpenGlControl : OpenGlControlBase, ICustomHitTest
 {
