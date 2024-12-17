@@ -6,9 +6,9 @@ namespace Pan.Avalonia.OpenGL.Models;
 
 public class Shader
 {
-    private string _shadersPath = @"Resources\OpenGL\Shaders";
-    
-    private Dictionary<string, int> _uniformLocations = [];
+    private const string ShadersPath = @"Resources\OpenGL\Shaders";
+
+    private readonly Dictionary<string, int> _uniformLocations = [];
 
     public string Fragment { get; init; }
     public string Vertex { get; init; }
@@ -16,8 +16,8 @@ public class Shader
 
     public Shader(string shaderName)
     {
-        Fragment = File.ReadAllText(Path.Combine(_shadersPath, shaderName, $"{shaderName}.frag"));
-        Vertex = File.ReadAllText(Path.Combine(_shadersPath, shaderName, $"{shaderName}.vert"));
+        Fragment = File.ReadAllText(Path.Combine(ShadersPath, shaderName, $"{shaderName}.frag"));
+        Vertex = File.ReadAllText(Path.Combine(ShadersPath, shaderName, $"{shaderName}.vert"));
 
         Init();
     }

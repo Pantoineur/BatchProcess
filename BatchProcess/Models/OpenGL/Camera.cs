@@ -6,10 +6,10 @@ namespace BatchProcess.Models.OpenGL;
 public class Camera : Node
 {
     private Matrix4 _projectionMatrix;
-    private float _speed = 5.0f;
 
     public Matrix4 ViewMatrix { get; private set; }
     public Matrix4 ProjectionMatrix => _projectionMatrix;
+    public float Speed { get; set; } = 5.0f;
     
     public float FOV { get; private set; }
     public float AspectRatio { get; private set; }
@@ -43,12 +43,12 @@ public class Camera : Node
         var forward = Vector3.UnitZ;
         var up = Vector3.UnitY;
         
-        ViewMatrix = Matrix4.LookAt(Position, Position + new Vector3((0, 0, 1)), up);
+        ViewMatrix = Matrix4.LookAt(Position, Position + forward, up);
     }
 
     public void Move(Direction direction, float deltaTime)
     {
-        var velocity = _speed * deltaTime;
+        var velocity = Speed * deltaTime;
         Rotation = Quaternion.FromEulerAngles(Pitch, Yaw, Roll);
         var forward = Vector3.UnitZ;
         var right = Vector3.UnitX;

@@ -86,9 +86,7 @@ namespace BatchProcess.Controls
         private int _elementBufferObject;
         private int _vertexArrayObject;
 
-        private Matrix4 _projectionMatrix;
-
-        private Camera _mainCamera;
+        private Camera? _mainCamera;
         
         private readonly float _rotationSpeed = 30.0f;
         
@@ -141,18 +139,7 @@ namespace BatchProcess.Controls
             get => GetValue(FOVProperty);
             set => SetValue(FOVProperty, value);
         }
-
-        private float _toto;
-
-        public static readonly DirectProperty<MainWindowGLRendering, float> TotoProperty = AvaloniaProperty.RegisterDirect<MainWindowGLRendering, float>(
-            nameof(Toto), o => o.Toto, (o, v) => o.Toto = v);
-
-        public float Toto
-        {
-            get => _toto;
-            set => SetAndRaise(TotoProperty, ref _toto, value);
-        }
-
+        
         protected override void OpenTkInit()
         {
             ChangeWindowTitle();
@@ -221,8 +208,8 @@ namespace BatchProcess.Controls
 
             GL.PolygonMode(TriangleFace.FrontAndBack, Wireframe ? PolygonMode.Line : PolygonMode.Fill);
             
-            _mainCamera.UpdateProjection(FOV, (float)Bounds.Width / (float)Bounds.Height);
-            _mainCamera.UpdateView();
+            _mainCamera?.UpdateProjection(FOV, (float)Bounds.Width / (float)Bounds.Height);
+            _mainCamera?.UpdateView();
             
             if (_shader is not null)
             {
@@ -233,8 +220,8 @@ namespace BatchProcess.Controls
                 _shader.SetVector4("InColor", new(SelectedColor, 1));
                 _shader.SetFloat("hOffset", HOffset);
                 _shader.SetFloat("blend", Blend);
-                _shader.SetMat4("view", _mainCamera.ViewMatrix);
-                _shader?.SetMat4("projection", _mainCamera.ProjectionMatrix);
+                _shader.SetMat4("view", _mainCamera?.ViewMatrix ?? Matrix4.Identity);
+                _shader?.SetMat4("projection", _mainCamera?.ProjectionMatrix ?? Matrix4.Identity);
             }
             
             GL.BindVertexArray(_vertexArrayObject);
@@ -256,6 +243,8 @@ namespace BatchProcess.Controls
 
         private void DoUpdate(float deltaTime)
         {
+            if (_mainCamera is null) return;
+            
             if (KeyboardState.WasKeyDownLastFrame(Key.Z))
             {
                 _mainCamera.Move(Direction.Forward, deltaTime);
@@ -287,11 +276,6 @@ namespace BatchProcess.Controls
         {
             // if (this.VisualRoot is Window window)
                 // window.Title = "Avalonia Sample : OpenGL Version: " + GL.GetString(StringName.Version);
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
         }
 
         protected override void OnPointerPressed(PointerPressedEventArgs e)
