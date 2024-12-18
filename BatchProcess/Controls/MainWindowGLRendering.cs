@@ -82,10 +82,6 @@ namespace BatchProcess.Controls
             2, 3, 1,
         ];
 
-        private int _vertexBufferObject;
-        private int _elementBufferObject;
-        private int _vertexArrayObject;
-
         private Camera? _mainCamera;
         
         private readonly float _rotationSpeed = 30.0f;
@@ -143,30 +139,7 @@ namespace BatchProcess.Controls
         protected override void OpenTkInit()
         {
             ChangeWindowTitle();
-            
-            _vertexArrayObject = GL.GenVertexArray();
-            _vertexBufferObject = GL.GenBuffer();
-            _elementBufferObject = GL.GenBuffer();
-            
             GL.ClearColor(_backgroundColor);
-            
-            GL.BindVertexArray(_vertexArrayObject);
-            
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-            GL.BufferData(BufferTarget.ArrayBuffer, _verticesCube.Length * sizeof(float), _verticesCube, BufferUsageHint.StaticDraw);
-            
-            const int vec3Size = 3 * sizeof(float);
-            const int vec2Size = 2 * sizeof(float);
-            const int stride = vec3Size + vec2Size; // Vertices + TexCoords
-            
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
-            GL.EnableVertexAttribArray(0);
-            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, vec3Size);
-            GL.EnableVertexAttribArray(1);
-            
-            // EBO
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(int), _indices, BufferUsageHint.StaticDraw);
             
             _containerTex = new();
             _containerTex.Use();
@@ -223,8 +196,6 @@ namespace BatchProcess.Controls
                 _shader.SetMat4("view", _mainCamera?.ViewMatrix ?? Matrix4.Identity);
                 _shader?.SetMat4("projection", _mainCamera?.ProjectionMatrix ?? Matrix4.Identity);
             }
-            
-            GL.BindVertexArray(_vertexArrayObject);
 
             for (var i = 0; i < _cubes.Length; i++)
             {
@@ -266,10 +237,6 @@ namespace BatchProcess.Controls
         protected override void OpenTkTeardown()
         {
             Console.WriteLine("UI: Tearing down gl component");
-
-            GL.DeleteVertexArray(_vertexArrayObject);
-            GL.DeleteBuffer(_vertexBufferObject);
-            GL.DeleteBuffer(_elementBufferObject);
         }
 
         private void ChangeWindowTitle()
