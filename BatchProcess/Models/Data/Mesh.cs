@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL4;
-using Pan.Avalonia.OpenGL.Models;
+using Silk.NET.OpenGL;
+using Shader = BatchProcess.Models.OpenGL.Shader;
 
-namespace BatchProcess.Models._3D;
+namespace BatchProcess.Models.Data;
 
 public class Mesh
 {
-    private int _vao;
-    private int _vbo;
-    private int _ebo;
+    private readonly GL _gl;
+    
+    private uint _vao;
+    private uint _vbo;
+    private uint _ebo;
     
     public List<Vertex> Vertices { get; set; }
     public List<int> Indices { get; set; }
     public List<Texture> Textures { get; set; }
 
-    public Mesh() {}
-
-    public Mesh(Vertex[] vertices, int[] indices, Texture[] textures)
+    public Mesh(GL gl)
     {
+        _gl = gl;
+    }
+
+    public Mesh(GL gl, Vertex[] vertices, int[] indices, Texture[] textures)
+    {
+        _gl = gl;
+        
         Vertices = [..vertices];
         Indices = [..indices];
         Textures = [..textures];
@@ -28,11 +35,11 @@ public class Mesh
 
     private void SetupMesh()
     {
-        _vao = GL.GenVertexArray();
-        _vbo = GL.GenBuffer();
-        _ebo = GL.GenBuffer();
+        _vao = _gl.GenVertexArray();
+        _vbo = _gl.GenBuffer();
+        _ebo = _gl.GenBuffer();
 
-        GL.BindVertexArray(_vao);
+        _gl.BindVertexArray(_vao);
         
         const int vec3Size = 3 * sizeof(float);
         const int vec2Size = 2 * sizeof(float);
@@ -40,23 +47,23 @@ public class Mesh
 
         var verticesBufferData = Vertices.ToBufferFloatArray();
         
-        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-        GL.BufferData(BufferTarget.ArrayBuffer, verticesBufferData.Length, verticesBufferData, BufferUsageHint.StaticDraw);
+        _gl.BindBuffer(GLEnum.ArrayBuffer, _vbo);
+        _gl.BufferData<float>(GLEnum.ArrayBuffer, (nuint)verticesBufferData.Length, verticesBufferData, GLEnum.StaticDraw);
             
         // EBO
-        GL.BindBuffer(BufferTarget.ElementArrayBuffer, _ebo);
-        GL.BufferData(BufferTarget.ElementArrayBuffer, Indices.Count * sizeof(int), Indices.ToArray(), BufferUsageHint.StaticDraw);
+        _gl.BindBuffer(GLEnum.ElementArrayBuffer, _ebo);
+        _gl.BufferData<int>(GLEnum.ElementArrayBuffer, (nuint) Indices.Count * sizeof(int), Indices.ToArray(), GLEnum.StaticDraw);
             
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, totalLength, 0);
-        GL.EnableVertexAttribArray(0);
+        _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, totalLength, 0);
+        _gl.EnableVertexAttribArray(0);
         
-        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, totalLength, vec3Size);
-        GL.EnableVertexAttribArray(1);
+        _gl.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, totalLength, vec3Size);
+        _gl.EnableVertexAttribArray(1);
         
-        GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, totalLength, vec3Size * 2);
-        GL.EnableVertexAttribArray(2);
+        _gl.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, totalLength, vec3Size * 2);
+        _gl.EnableVertexAttribArray(2);
 
-        GL.BindVertexArray(0);
+        _gl.BindVertexArray(0);
     }
 
     public void Draw(Shader shader)
@@ -65,7 +72,7 @@ public class Mesh
         uint numSpecular = 0;
         for(var i = 0; i < Textures.Count; i++)
         {
-            GL.ActiveTexture(TextureUnit.Texture0 + i);
+            _gl.ActiveTexture(TextureUnit.Texture0 + i);
 
             var number = "";
             var name = Textures[i].Type;
@@ -81,20 +88,20 @@ public class Mesh
             }
             
             shader.SetInt($"material.name{number}", i);
-            GL.BindTexture(TextureTarget.Texture2D, Textures[i].Id);
+            _gl.BindTexture(TextureTarget.Texture2D, Textures[i].Id);
         }
         
-        GL.ActiveTexture(TextureUnit.Texture0);
+        _gl.ActiveTexture(TextureUnit.Texture0);
         
-        GL.BindVertexArray(_vao);
-        GL.DrawElements(PrimitiveType.Triangles, Indices.Count, DrawElementsType.UnsignedInt, 0);
-        GL.BindVertexArray(0);
+        _gl.BindVertexArray(_vao);
+        _gl.DrawElements(GLEnum.Triangles, (uint)Indices.Count, GLEnum.UnsignedInt, 0);
+        _gl.BindVertexArray(0);
     }
     
     public void Destroy()
     {
-        GL.DeleteVertexArray(_vao);
-        GL.DeleteBuffer(_vbo);
-        GL.DeleteBuffer(_ebo);
+        _gl.DeleteVertexArray(_vao);
+        _gl.DeleteBuffer(_vbo);
+        _gl.DeleteBuffer(_ebo);
     }
 }

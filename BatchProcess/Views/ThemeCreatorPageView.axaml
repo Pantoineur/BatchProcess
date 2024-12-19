@@ -36,13 +36,21 @@
             
         </Border>
         <Border Grid.Column="1" Background="Blue">
-            <controls:MainWindowGLRendering 
-                Wireframe="{Binding Wireframe}" 
+            <controls:SilkNetGL
+                Wireframe="{Binding Wireframe}"
                 SelectedColor="{Binding SelectedColor}"
                 HOffset="{Binding HOffset}"
                 Blend="{Binding Blend}"
                 FOV="{Binding Fov}"
                 Focusable="True"/>
+            
+            <!-- <controls:MainWindowGLRendering  -->
+            <!--     Wireframe="{Binding Wireframe}"  -->
+            <!--     SelectedColor="{Binding SelectedColor}" -->
+            <!--     HOffset="{Binding HOffset}" -->
+            <!--     Blend="{Binding Blend}" -->
+            <!--     FOV="{Binding Fov}" -->
+            <!--     Focusable="True"/> -->
         </Border>
     </Grid>
     

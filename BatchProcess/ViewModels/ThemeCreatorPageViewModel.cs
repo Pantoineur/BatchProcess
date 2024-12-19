@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Numerics;
 using Avalonia.Media;
 using BatchProcess.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using OpenTK.Mathematics;
 using TowerWarZ.MapCreator.Core;
 
 namespace BatchProcess.ViewModels;

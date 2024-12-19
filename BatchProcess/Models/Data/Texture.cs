@@ -1,6 +1,4 @@
-﻿using OpenTK.Mathematics;
-
-namespace BatchProcess.Models._3D;
+﻿namespace BatchProcess.Models.Data;
 
 public struct Texture
 {

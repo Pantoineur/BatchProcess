@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using OpenTK.Mathematics;
+using Silk.NET.Maths;
 
-namespace BatchProcess.Models._3D;
+namespace BatchProcess.Models.Data;
 
 public struct Vertex
 {
-    public Vector3 Position;
-    public Vector3 Normal;
-    public Vector2 TexCoords;
+    public Vector3D<float> Position;
+    public Vector3D<float> Normal;
+    public Vector2D<float> TexCoords;
 
     public float[] ToFloatArray()
     {
